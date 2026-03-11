@@ -1102,7 +1102,6 @@ footer a { color: var(--brown-pale); text-decoration: none; }
       <div class="order-summary">
         <div class="summary-row"><span>Subtotal</span><span>₹<span id="subtotal">0</span></span></div>
         <div class="summary-row"><span>Shipping</span><span style="color:#16a34a">FREE</span></div>
-        <div class="summary-row"><span>GST (18%)</span><span>₹<span id="gst">0</span></span></div>
         <div class="summary-row total"><span>Total</span><span>₹<span id="total">0</span></span></div>
         <button class="btn-primary" onclick="placeOrder()" style="margin-top:20px">Place Order & Download Invoice</button>
         <button class="btn-secondary" onclick="openPage('storePage')">← Continue Shopping</button>
@@ -1119,7 +1118,7 @@ footer a { color: var(--brown-pale); text-decoration: none; }
   <div class="container">
     <div class="success-icon">✓</div>
     <h1>Order Confirmed!</h1>
-    <p>Thank you for shopping with First Store. Your invoice has been downloaded and a confirmation email is on its way.</p>
+    <p>Thank you for shopping with First Store. Your invoice PDF has been downloaded and the store owner has been notified to fulfil your order.</p>
     <div class="invoice-card">
       <div style="font-size:12px;color:var(--text-light);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">Invoice Number</div>
       <div class="invoice-num" id="invoice"></div>
@@ -1230,11 +1229,8 @@ function showToast(msg) {
 function updateCart() {
   document.getElementById("cartcount").textContent = cart.length;
   let subtotal = cart.reduce((s, i) => s + i.price, 0);
-  let gst = Math.round(subtotal * 0.18);
-  let total = subtotal + gst;
   document.getElementById("subtotal") && (document.getElementById("subtotal").textContent = subtotal);
-  document.getElementById("gst") && (document.getElementById("gst").textContent = gst);
-  document.getElementById("total") && (document.getElementById("total").textContent = total);
+  document.getElementById("total") && (document.getElementById("total").textContent = subtotal);
 
   let html = "";
   if (cart.length === 0) {
@@ -1283,12 +1279,12 @@ function placeOrder() {
 
   const invoice = "FST-" + new Date().getFullYear() + "-" + Math.floor(10000 + Math.random() * 90000);
   let subtotal = cart.reduce((s, i) => s + i.price, 0);
-  let gst = Math.round(subtotal * 0.18);
-  let total = subtotal + gst;
+  let total = subtotal;
   const items = cart.map(i => ({name: i.name, price: i.price}));
 
-  saveOrder(invoice, name, phone, email, address, items, subtotal, gst, total);
-  generatePDF(invoice, name, phone, email, address, items, subtotal, gst, total);
+  saveOrder(invoice, name, phone, email, address, items, total);
+  generatePDF(invoice, name, phone, email, address, items, total);
+  sendOwnerEmail(invoice, name, phone, email, address, items, total);
 
   document.getElementById("invoice").textContent = invoice;
   document.getElementById("successDetails").innerHTML = `${name} &nbsp;|&nbsp; ${phone}<br>Total paid: ₹${total}`;
@@ -1297,9 +1293,174 @@ function placeOrder() {
   openPage("successPage");
 }
 
-function saveOrder(invoice, name, phone, email, address, items, subtotal, gst, total) {
+function sendOwnerEmail(invoice, name, phone, email, address, items, total) {
+  const ownerEmail = "vorah234@gmail.com";
+  const orderDate = new Date().toLocaleDateString('en-IN', {weekday:'long', day:'2-digit', month:'long', year:'numeric'});
+  const orderTime = new Date().toLocaleTimeString('en-IN', {hour:'2-digit', minute:'2-digit'});
+
+  const itemRows = items.map((item, i) => `
+    <tr style="background:${i%2===0?'#faf5ee':'#ffffff'}">
+      <td style="padding:10px 16px;color:#5a3825;font-size:14px">${i+1}</td>
+      <td style="padding:10px 16px;color:#2c1a0e;font-weight:500;font-size:14px">${item.name}</td>
+      <td style="padding:10px 16px;color:#a0622a;font-weight:700;font-size:14px;text-align:right">₹${item.price}</td>
+    </tr>`).join('');
+
+  const emailBody = `
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"></head>
+<body style="margin:0;padding:0;background:#f0e6d3;font-family:'Segoe UI',Arial,sans-serif">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#f0e6d3;padding:32px 0">
+<tr><td align="center">
+<table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(74,46,26,0.15);max-width:600px">
+
+  <!-- HEADER -->
+  <tr>
+    <td style="background:linear-gradient(135deg,#4a2e1a,#7c4a2d);padding:32px 40px">
+      <table width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+          <td>
+            <table cellpadding="0" cellspacing="0">
+              <tr>
+                <td style="background:#a0622a;border-radius:8px;width:44px;height:44px;text-align:center;vertical-align:middle;font-size:22px;font-weight:bold;color:#faf5ee">FS</td>
+                <td style="padding-left:12px">
+                  <div style="font-size:20px;font-weight:700;color:#e8cdb5;letter-spacing:1px">FIRST STORE</div>
+                  <div style="font-size:11px;color:#a0622a;margin-top:2px">Premium Tech Accessories</div>
+                </td>
+              </tr>
+            </table>
+          </td>
+          <td align="right">
+            <div style="background:rgba(200,149,106,0.2);border:1px solid rgba(200,149,106,0.4);border-radius:20px;padding:6px 16px;display:inline-block">
+              <span style="color:#e8cdb5;font-size:12px;font-weight:600;letter-spacing:1px">🔔 NEW ORDER</span>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <!-- ALERT BANNER -->
+  <tr>
+    <td style="background:#a0622a;padding:14px 40px">
+      <table width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+          <td style="color:#faf5ee;font-size:15px;font-weight:600">📦 Order Ready to Fulfil — <span style="color:#e8cdb5">${invoice}</span></td>
+          <td align="right" style="color:#e8cdb5;font-size:13px">${orderDate}, ${orderTime}</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <!-- BODY -->
+  <tr><td style="padding:36px 40px">
+
+    <!-- CUSTOMER DETAILS -->
+    <div style="margin-bottom:28px">
+      <div style="font-size:11px;font-weight:700;color:#a0622a;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px">👤 Customer Details</div>
+      <table width="100%" cellpadding="0" cellspacing="0" style="background:#faf5ee;border-radius:12px;border:1.5px solid #e8cdb5">
+        <tr>
+          <td style="padding:16px 20px;border-bottom:1px solid #e8cdb5">
+            <table width="100%" cellpadding="0" cellspacing="0">
+              <tr>
+                <td width="50%" style="padding-right:16px">
+                  <div style="font-size:11px;color:#9a7055;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Full Name</div>
+                  <div style="font-size:15px;font-weight:600;color:#2c1a0e">${name}</div>
+                </td>
+                <td width="50%">
+                  <div style="font-size:11px;color:#9a7055;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Phone</div>
+                  <div style="font-size:15px;font-weight:600;color:#2c1a0e">${phone}</div>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:16px 20px;border-bottom:1px solid #e8cdb5">
+            <div style="font-size:11px;color:#9a7055;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Email Address</div>
+            <div style="font-size:15px;font-weight:600;color:#2c1a0e">${email || '—'}</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:16px 20px">
+            <div style="font-size:11px;color:#9a7055;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">📍 Delivery Address</div>
+            <div style="font-size:14px;color:#2c1a0e;line-height:1.6">${address}</div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- ORDER ITEMS -->
+    <div style="margin-bottom:28px">
+      <div style="font-size:11px;font-weight:700;color:#a0622a;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px">🛒 Order Items</div>
+      <table width="100%" cellpadding="0" cellspacing="0" style="border-radius:12px;overflow:hidden;border:1.5px solid #e8cdb5">
+        <tr style="background:#4a2e1a">
+          <th style="padding:10px 16px;text-align:left;color:#e8cdb5;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase">#</th>
+          <th style="padding:10px 16px;text-align:left;color:#e8cdb5;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase">Product</th>
+          <th style="padding:10px 16px;text-align:right;color:#e8cdb5;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase">Price</th>
+        </tr>
+        ${itemRows}
+        <tr style="background:#4a2e1a">
+          <td colspan="2" style="padding:12px 16px;color:#e8cdb5;font-size:13px;font-weight:700;text-align:right">ORDER TOTAL</td>
+          <td style="padding:12px 16px;color:#e8cdb5;font-size:18px;font-weight:700;text-align:right">₹${total}</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- ACTION BOX -->
+    <table width="100%" cellpadding="0" cellspacing="0" style="background:linear-gradient(135deg,#faf5ee,#f0e6d3);border-radius:12px;border:1.5px solid #e8cdb5">
+      <tr>
+        <td style="padding:20px 24px">
+          <div style="font-size:13px;font-weight:700;color:#4a2e1a;margin-bottom:6px">⚡ Action Required</div>
+          <div style="font-size:13px;color:#5a3825;line-height:1.7">
+            Please pack and dispatch this order within <strong>24 hours</strong>.<br>
+            Contact customer at <strong>${phone}</strong>${email ? ` or <strong>${email}</strong>` : ''} for any queries.
+          </div>
+        </td>
+      </tr>
+    </table>
+
+  </td></tr>
+
+  <!-- FOOTER -->
+  <tr>
+    <td style="background:#4a2e1a;padding:24px 40px;text-align:center">
+      <div style="color:#c8956a;font-size:13px;font-weight:600;margin-bottom:4px">First Store — Owner Notification System</div>
+      <div style="color:#7c4a2d;font-size:12px">This email was auto-generated when a new order was placed on www.firststore.in</div>
+    </td>
+  </tr>
+
+</table>
+</td></tr>
+</table>
+</body>
+</html>`;
+
+  // Open mailto with HTML summary (plain text fallback for mailto)
+  const plainText = `NEW ORDER: ${invoice}
+Date: ${orderDate} ${orderTime}
+
+CUSTOMER DETAILS
+Name: ${name}
+Phone: ${phone}
+Email: ${email || 'N/A'}
+Address: ${address}
+
+ORDER ITEMS
+${items.map((item,i)=>`${i+1}. ${item.name} — ₹${item.price}`).join('\n')}
+
+TOTAL: ₹${total}
+
+Please fulfil this order within 24 hours.`;
+
+  const subject = encodeURIComponent(`🛍 New Order ${invoice} — ₹${total} — ${name}`);
+  const body = encodeURIComponent(plainText);
+  window.open(`mailto:${ownerEmail}?subject=${subject}&body=${body}`, '_blank');
+}
+
+function saveOrder(invoice, name, phone, email, address, items, total) {
   let orders = JSON.parse(localStorage.getItem("orders") || "[]");
-  orders.unshift({invoice, name, phone, email, address, items, subtotal, gst, total, date: new Date().toLocaleDateString('en-IN')});
+  orders.unshift({invoice, name, phone, email, address, items, total, date: new Date().toLocaleDateString('en-IN')});
   localStorage.setItem("orders", JSON.stringify(orders));
 }
 
@@ -1334,7 +1495,7 @@ function loadOrders() {
     </div>`).join('');
 }
 
-function generatePDF(invoice, name, phone, email, address, items, subtotal, gst, total) {
+function generatePDF(invoice, name, phone, email, address, items, total) {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
   const W = doc.internal.pageSize.getWidth();
@@ -1442,28 +1603,17 @@ function generatePDF(invoice, name, phone, email, address, items, subtotal, gst,
   // Totals box
   y += 20;
   doc.setFillColor(250, 245, 238);
-  doc.roundedRect(W/2, y, W/2 - 14, 46, 4, 4, 'F');
+  doc.roundedRect(W/2, y, W/2 - 14, 34, 4, 4, 'F');
   doc.setDrawColor(200, 149, 106);
-  doc.roundedRect(W/2, y, W/2 - 14, 46, 4, 4, 'S');
+  doc.roundedRect(W/2, y, W/2 - 14, 34, 4, 4, 'S');
 
-  doc.setFontSize(10);
-  doc.setTextColor(90, 56, 37);
-  doc.text("Subtotal:", W/2 + 8, y + 12);
-  doc.text("GST (18%):", W/2 + 8, y + 24);
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(11);
+  doc.setFontSize(12);
   doc.setTextColor(44, 26, 14);
-  doc.text("Total:", W/2 + 8, y + 37);
-
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(10);
-  doc.setTextColor(90, 56, 37);
-  doc.text("₹" + subtotal, W - 18, y + 12, {align: 'right'});
-  doc.text("₹" + gst, W - 18, y + 24, {align: 'right'});
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(13);
+  doc.text("Total:", W/2 + 8, y + 20);
+  doc.setFontSize(14);
   doc.setTextColor(160, 98, 42);
-  doc.text("₹" + total, W - 18, y + 37, {align: 'right'});
+  doc.text("₹" + total, W - 18, y + 20, {align: 'right'});
 
   // Footer
   y += 70;
