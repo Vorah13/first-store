@@ -115,8 +115,6 @@ font-weight:600;
 margin:10px
 }
 
-.rating{color:#ffaa00}
-
 .review{
 background:white;
 padding:15px;
@@ -129,7 +127,7 @@ text-align:center;
 padding:60px
 }
 
-/* Floating cart button */
+/* Floating Cart Button */
 
 .floatingCart{
 position:fixed;
@@ -184,7 +182,7 @@ Limited Offer Ends In <span id="timer"></span>
 
 </div>
 
-<!-- CART -->
+<!-- CART PAGE -->
 
 <div id="cartPage" class="page">
 
@@ -195,11 +193,6 @@ Limited Offer Ends In <span id="timer"></span>
 <div id="cartItems"></div>
 
 <p class="total">Total ₹<span id="total">0</span></p>
-
-<h3>Coupon</h3>
-
-<input id="coupon" placeholder="Enter coupon">
-<button onclick="applyCoupon()">Apply</button>
 
 <h3>Customer Info</h3>
 
@@ -221,7 +214,6 @@ Limited Offer Ends In <span id="timer"></span>
 <div class="success">
 
 <h1>Order Successful 🎉</h1>
-
 <p>Your Invoice Number</p>
 
 <h2 id="invoice"></h2>
@@ -240,11 +232,10 @@ Limited Offer Ends In <span id="timer"></span>
 
 <div class="grid">
 
-<div class="review">⭐⭐⭐⭐⭐ Amazing quality. – Rahul</div>
-<div class="review">⭐⭐⭐⭐ Fast delivery. – Priya</div>
-<div class="review">⭐⭐⭐⭐⭐ Great price. – Amit</div>
-<div class="review">⭐⭐⭐⭐ Very useful products. – Sneha</div>
-<div class="review">⭐⭐⭐⭐⭐ I will order again. – Arjun</div>
+<div class="review">⭐⭐⭐⭐⭐ Amazing quality – Rahul</div>
+<div class="review">⭐⭐⭐⭐ Fast delivery – Priya</div>
+<div class="review">⭐⭐⭐⭐⭐ Great price – Amit</div>
+<div class="review">⭐⭐⭐⭐ Good product – Sneha</div>
 
 </div>
 
@@ -259,43 +250,34 @@ Limited Offer Ends In <span id="timer"></span>
 <script>
 
 const products=[
-
-{name:"Smart Watch",price:999,cat:"tech",img:"https://picsum.photos/200?1",rating:"⭐⭐⭐⭐"},
-{name:"Wireless Earbuds",price:799,cat:"tech",img:"https://picsum.photos/200?2",rating:"⭐⭐⭐⭐⭐"},
-{name:"Ring Light",price:499,cat:"tech",img:"https://picsum.photos/200?3",rating:"⭐⭐⭐⭐"},
-{name:"Bluetooth Speaker",price:699,cat:"tech",img:"https://picsum.photos/200?4",rating:"⭐⭐⭐⭐⭐"},
-{name:"Power Bank",price:599,cat:"tech",img:"https://picsum.photos/200?5",rating:"⭐⭐⭐⭐"},
-{name:"Phone Stand",price:199,cat:"accessory",img:"https://picsum.photos/200?6",rating:"⭐⭐⭐⭐"},
-{name:"USB Cable",price:149,cat:"accessory",img:"https://picsum.photos/200?7",rating:"⭐⭐⭐⭐"},
-{name:"Laptop Pad",price:899,cat:"tech",img:"https://picsum.photos/200?8",rating:"⭐⭐⭐⭐⭐"},
-{name:"Gaming Mouse",price:499,cat:"tech",img:"https://picsum.photos/200?9",rating:"⭐⭐⭐⭐"},
-{name:"Keyboard",price:699,cat:"tech",img:"https://picsum.photos/200?10",rating:"⭐⭐⭐⭐"}
-
+{name:"Smart Watch",price:999,cat:"tech",img:"https://picsum.photos/200?1"},
+{name:"Wireless Earbuds",price:799,cat:"tech",img:"https://picsum.photos/200?2"},
+{name:"Ring Light",price:499,cat:"tech",img:"https://picsum.photos/200?3"},
+{name:"Bluetooth Speaker",price:699,cat:"tech",img:"https://picsum.photos/200?4"},
+{name:"Power Bank",price:599,cat:"tech",img:"https://picsum.photos/200?5"},
+{name:"Phone Stand",price:199,cat:"accessory",img:"https://picsum.photos/200?6"},
+{name:"USB Cable",price:149,cat:"accessory",img:"https://picsum.photos/200?7"},
+{name:"Laptop Pad",price:899,cat:"tech",img:"https://picsum.photos/200?8"},
+{name:"Gaming Mouse",price:499,cat:"tech",img:"https://picsum.photos/200?9"},
+{name:"Keyboard",price:699,cat:"tech",img:"https://picsum.photos/200?10"}
 ]
 
 let cart=[]
-let discount=0
 
 function loadProducts(list=products){
 
 let box=document.getElementById("products")
-
 box.innerHTML=""
 
 list.forEach((p,i)=>{
 
 box.innerHTML+=`
-
 <div class="product">
-
 <img src="${p.img}">
 <h4>${p.name}</h4>
-<div class="rating">${p.rating}</div>
 <p class="price">₹${p.price}</p>
 <button onclick="add(${i})">Add to Cart</button>
-
 </div>
-
 `
 
 })
@@ -315,20 +297,14 @@ let html=""
 let total=0
 
 cart.forEach((item,index)=>{
-
 total+=item.price
 
-html+=`<div class="cartitem">
-
+html+=`
+<div class="cartitem">
 ${item.name} ₹${item.price}
-
 <button onclick="remove(${index})">X</button>
-
 </div>`
-
 })
-
-total=total-discount
 
 document.getElementById("cartItems").innerHTML=html
 document.getElementById("total").innerText=total
@@ -349,80 +325,27 @@ document.getElementById(p).classList.add("active")
 }
 
 function searchProduct(q){
-
 q=q.toLowerCase()
-
 loadProducts(products.filter(p=>p.name.toLowerCase().includes(q)))
-
 }
 
 function filter(cat){
-
 if(cat==="all") loadProducts()
 else loadProducts(products.filter(p=>p.cat===cat))
-
-}
-
-function applyCoupon(){
-
-const code=document.getElementById("coupon").value
-
-if(code==="SAVE10"){
-discount=100
-alert("₹100 discount applied")
-updateCart()
-}
-
-else alert("Invalid coupon")
-
 }
 
 function placeOrder(){
 
-if(cart.length===0)return alert("Cart empty")
+if(cart.length===0) return alert("Cart empty")
 
 const invoice="INV"+Math.floor(Math.random()*100000)
 
-let total=document.getElementById("total").innerText
-
 document.getElementById("invoice").innerText=invoice
 
-sendEmail(invoice,total)
-
 cart=[]
-discount=0
 updateCart()
 
 openPage("successPage")
-
-}
-
-function sendEmail(invoice,total){
-
-const form=document.createElement("form")
-
-form.action="https://formsubmit.co/youremail@gmail.com"
-form.method="POST"
-
-const data={
-Invoice:invoice,
-Total:total
-}
-
-for(let key in data){
-
-let input=document.createElement("input")
-input.type="hidden"
-input.name=key
-input.value=data[key]
-
-form.appendChild(input)
-
-}
-
-document.body.appendChild(form)
-
-form.submit()
 
 }
 
