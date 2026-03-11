@@ -1,170 +1,142 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
 <title>FIRST STORE</title>
 
-<link href="https://ibb.co/ymn6Qqwv" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Poppins,sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins}
 
-body{
-background:#ffffff;
-color:#333;
-}
-
-.container{
-width:90%;
-max-width:1100px;
-margin:auto;
-}
+body{background:#f5f7ff;color:#333}
 
 header{
-padding:15px 0;
-border-bottom:1px solid #eee;
-}
-
-.logo{
-font-size:24px;
-font-weight:700;
-color:#0066ff;
-}
-
-.hero{
-background:linear-gradient(135deg,#0066ff,#4da3ff);
+background:#0066ff;
 color:white;
-text-align:center;
-padding:80px 20px;
+padding:15px;
+display:flex;
+justify-content:space-between;
+align-items:center
 }
 
-.hero h1{
-font-size:36px;
-margin-bottom:10px;
-}
+.logo{font-size:22px;font-weight:600}
 
-.section{
-padding:60px 20px;
-}
-
-.section-title{
-text-align:center;
-font-size:28px;
-margin-bottom:40px;
+.cartbtn{
+background:white;
 color:#0066ff;
+padding:6px 14px;
+border-radius:20px;
+cursor:pointer
+}
+
+.banner{
+background:#ffcc00;
+text-align:center;
+padding:6px;
+font-size:14px;
+font-weight:600
+}
+
+.container{width:90%;max-width:1100px;margin:auto;padding:20px}
+
+.search{
+width:100%;
+padding:8px;
+margin-bottom:15px;
+border-radius:6px;
+border:1px solid #ccc
+}
+
+.categories button{
+padding:6px 12px;
+margin:5px;
+border:none;
+background:#e6ecff;
+border-radius:15px;
+cursor:pointer
 }
 
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:25px;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:18px
 }
 
 .product{
 background:white;
-border-radius:12px;
-box-shadow:0 8px 20px rgba(0,0,0,0.08);
-overflow:hidden;
-text-align:center;
+border-radius:10px;
+padding:12px;
+box-shadow:0 5px 12px rgba(0,0,0,0.08);
+text-align:center
 }
 
 .product img{
 width:100%;
-height:200px;
+height:140px;
 object-fit:cover;
+border-radius:6px
 }
 
-.product h3{
-margin-top:10px;
+.badge{
+background:red;
+color:white;
+font-size:11px;
+padding:3px 6px;
+border-radius:6px;
+position:absolute
 }
 
-.price{
-color:#0066ff;
-font-weight:700;
-font-size:20px;
-}
+.price{color:#0066ff;font-weight:600}
 
-.product button{
-margin:15px;
-padding:10px 20px;
-border:none;
+button{
 background:#0066ff;
 color:white;
-border-radius:20px;
-cursor:pointer;
+border:none;
+padding:6px 12px;
+border-radius:15px;
+margin-top:5px;
+cursor:pointer
 }
 
-footer{
-text-align:center;
-padding:20px;
-background:#f5f7ff;
-margin-top:40px;
-}
+.page{display:none}
+.active{display:block}
 
-/* order page */
-
-#orderPage{
-display:none;
-padding:40px 20px;
-background:#f5f7ff;
-min-height:100vh;
-}
-
-.order-box{
-background:white;
-max-width:420px;
-margin:auto;
-padding:25px;
-border-radius:10px;
-box-shadow:0 8px 20px rgba(0,0,0,0.1);
-}
-
-.order-box h2{
-text-align:center;
-color:#0066ff;
-margin-bottom:20px;
+.cartitem{
+display:flex;
+justify-content:space-between;
+margin:8px 0
 }
 
 input,textarea{
 width:100%;
-padding:10px;
-margin:8px 0;
+padding:8px;
+margin:5px 0;
 border:1px solid #ccc;
-border-radius:5px;
+border-radius:5px
 }
 
-button.submit{
-width:100%;
-padding:12px;
-background:#0066ff;
-color:white;
-border:none;
-border-radius:20px;
-margin-top:10px;
-cursor:pointer;
+.total{font-weight:600;margin-top:10px}
+
+.timer{
+color:red;
+font-weight:600;
+text-align:center;
+margin:10px
 }
 
-.back{
-display:inline-block;
-margin-bottom:15px;
-color:#0066ff;
-cursor:pointer;
+.success{
+text-align:center;
+padding:60px
 }
 
-.productinfo{
-background:#eef4ff;
-padding:10px;
-border-radius:6px;
-margin-bottom:15px;
+.rating{
+color:#ffaa00;
+font-size:14px
 }
 
 </style>
@@ -173,110 +145,91 @@ margin-bottom:15px;
 
 <body>
 
-<div id="storePage">
+<div class="banner">
+🚚 Free Shipping | 💳 Cash on Delivery | 🔒 Secure Checkout
+</div>
 
 <header>
-<div class="container">
+
 <div class="logo">FIRST STORE</div>
+
+<div class="cartbtn" onclick="openPage('cartPage')">
+Cart (<span id="cartcount">0</span>)
 </div>
+
 </header>
 
-<section class="hero">
-
-<h1>Best Quality Products at Low Prices</h1>
-
-<p>Perfect for people who want quality products without spending too much.</p>
-
-<p style="margin-top:10px;font-weight:600;">🔥 Limited Stock Available</p>
-
-</section>
-
-<section class="section">
-
-<h2 class="section-title">Popular Products</h2>
-
-<div class="container grid">
-
-<div class="product">
-
-<img src="https://picsum.photos/400/300?1">
-
-<h3>Smart Watch</h3>
-
-<p class="price">₹999</p>
-
-<button onclick="openOrder('Smart Watch',999)">Order</button>
-
+<div class="timer">
+Limited Offer Ends In: <span id="timer"></span>
 </div>
 
-<div class="product">
+<!-- STORE PAGE -->
 
-<img src="https://picsum.photos/400/300?2">
+<div id="storePage" class="page active">
 
-<h3>Wireless Earbuds</h3>
+<div class="container">
 
-<p class="price">₹799</p>
+<input class="search" placeholder="Search product..." onkeyup="searchProduct(this.value)">
 
-<button onclick="openOrder('Wireless Earbuds',799)">Order</button>
-
+<div class="categories">
+<button onclick="filter('all')">All</button>
+<button onclick="filter('tech')">Tech</button>
+<button onclick="filter('accessory')">Accessories</button>
 </div>
 
-<div class="product">
-
-<img src="https://picsum.photos/400/300?3">
-
-<h3>LED Ring Light</h3>
-
-<p class="price">₹499</p>
-
-<button onclick="openOrder('LED Ring Light',499)">Order</button>
+<div class="grid" id="products"></div>
 
 </div>
 
 </div>
 
-</section>
+<!-- CART PAGE -->
 
-<footer>
-© 2026 FIRST STORE
-</footer>
+<div id="cartPage" class="page">
+
+<div class="container">
+
+<h2>Your Cart</h2>
+
+<div id="cartItems"></div>
+
+<p class="total">Total: ₹<span id="total">0</span></p>
+
+<h3>Coupon</h3>
+
+<input id="coupon" placeholder="Enter coupon">
+
+<button onclick="applyCoupon()">Apply</button>
+
+<h3>Customer Info</h3>
+
+<input id="name" placeholder="Name">
+
+<input id="phone" placeholder="Phone">
+
+<textarea id="address" placeholder="Address"></textarea>
+
+<button onclick="placeOrder()">Place Order</button>
+
+<button onclick="openPage('storePage')">Back</button>
 
 </div>
 
-
-<div id="orderPage">
-
-<div class="order-box">
-
-<div class="back" onclick="goBack()">← Back to Store</div>
-
-<h2>Place Your Order</h2>
-
-<div class="productinfo">
-
-<b>Product:</b> <span id="productName"></span><br>
-
-<b>Price:</b> ₹<span id="productPrice"></span>
-
 </div>
 
-<form action="https://formsubmit.co/vorah234@gmail.com" method="POST">
+<!-- SUCCESS PAGE -->
 
-<input type="hidden" name="Product" id="productInput">
+<div id="successPage" class="page">
 
-<input type="hidden" name="Price" id="priceInput">
+<div class="success">
 
-<input type="text" name="Customer Name" placeholder="Your Name" required>
+<h1>Order Successful 🎉</h1>
 
-<input type="tel" name="Phone" placeholder="Phone Number" required>
+<p>Your invoice number:</p>
 
-<textarea name="Address" placeholder="Delivery Address" required></textarea>
+<h2 id="invoice"></h2>
 
-<input type="number" name="Quantity" value="1">
-
-<button class="submit" type="submit">Place Order</button>
-
-</form>
+<button onclick="openPage('storePage')">Continue Shopping</button>
 
 </div>
 
@@ -284,25 +237,180 @@ margin-bottom:15px;
 
 <script>
 
-function openOrder(product,price){
+const products=[
 
-document.getElementById("storePage").style.display="none"
-document.getElementById("orderPage").style.display="block"
+{name:"Smart Watch",price:999,cat:"tech",img:"https://picsum.photos/200?1",rating:"★★★★☆"},
+{name:"Wireless Earbuds",price:799,cat:"tech",img:"https://picsum.photos/200?2",rating:"★★★★★"},
+{name:"Ring Light",price:499,cat:"tech",img:"https://picsum.photos/200?3",rating:"★★★★☆"},
+{name:"Bluetooth Speaker",price:699,cat:"tech",img:"https://picsum.photos/200?4",rating:"★★★★★"},
+{name:"Power Bank",price:599,cat:"tech",img:"https://picsum.photos/200?5",rating:"★★★★☆"},
+{name:"Phone Stand",price:199,cat:"accessory",img:"https://picsum.photos/200?6",rating:"★★★★☆"},
+{name:"USB Cable",price:149,cat:"accessory",img:"https://picsum.photos/200?7",rating:"★★★★☆"},
+{name:"Laptop Pad",price:899,cat:"tech",img:"https://picsum.photos/200?8",rating:"★★★★★"},
+{name:"Gaming Mouse",price:499,cat:"tech",img:"https://picsum.photos/200?9",rating:"★★★★☆"},
+{name:"Keyboard",price:699,cat:"tech",img:"https://picsum.photos/200?10",rating:"★★★★☆"},
+{name:"Mini Tripod",price:299,cat:"accessory",img:"https://picsum.photos/200?11",rating:"★★★★☆"},
+{name:"Selfie Stick",price:249,cat:"accessory",img:"https://picsum.photos/200?12",rating:"★★★★☆"},
+{name:"LED Lamp",price:399,cat:"accessory",img:"https://picsum.photos/200?13",rating:"★★★★☆"},
+{name:"Desk Fan",price:349,cat:"accessory",img:"https://picsum.photos/200?14",rating:"★★★★☆"},
+{name:"Headphones",price:899,cat:"tech",img:"https://picsum.photos/200?15",rating:"★★★★★"}
 
-document.getElementById("productName").innerText=product
-document.getElementById("productPrice").innerText=price
+]
 
-document.getElementById("productInput").value=product
-document.getElementById("priceInput").value="₹"+price
+let cart=[]
+let discount=0
+
+function loadProducts(list=products){
+
+const box=document.getElementById("products")
+
+box.innerHTML=""
+
+list.forEach((p,i)=>{
+
+box.innerHTML+=`
+
+<div class="product">
+
+<img src="${p.img}">
+
+<h4>${p.name}</h4>
+
+<div class="rating">${p.rating}</div>
+
+<p class="price">₹${p.price}</p>
+
+<button onclick="add(${i})">Add to Cart</button>
+
+</div>
+
+`
+
+})
 
 }
 
-function goBack(){
+function add(i){
 
-document.getElementById("storePage").style.display="block"
-document.getElementById("orderPage").style.display="none"
+cart.push(products[i])
+
+updateCart()
 
 }
+
+function updateCart(){
+
+document.getElementById("cartcount").innerText=cart.length
+
+let html=""
+
+let total=0
+
+cart.forEach((item,index)=>{
+
+total+=item.price
+
+html+=`<div class="cartitem">
+
+${item.name} ₹${item.price}
+
+<button onclick="remove(${index})">X</button>
+
+</div>`
+
+})
+
+total=total-discount
+
+document.getElementById("cartItems").innerHTML=html
+
+document.getElementById("total").innerText=total
+
+}
+
+function remove(i){
+
+cart.splice(i,1)
+
+updateCart()
+
+}
+
+function openPage(p){
+
+document.querySelectorAll(".page").forEach(pg=>pg.classList.remove("active"))
+
+document.getElementById(p).classList.add("active")
+
+}
+
+function searchProduct(q){
+
+q=q.toLowerCase()
+
+loadProducts(products.filter(p=>p.name.toLowerCase().includes(q)))
+
+}
+
+function filter(cat){
+
+if(cat==="all") loadProducts()
+
+else loadProducts(products.filter(p=>p.cat===cat))
+
+}
+
+function applyCoupon(){
+
+const code=document.getElementById("coupon").value
+
+if(code==="SAVE10"){
+
+discount=100
+
+alert("₹100 discount applied")
+
+updateCart()
+
+}
+
+else alert("Invalid coupon")
+
+}
+
+function placeOrder(){
+
+if(cart.length===0)return alert("Cart empty")
+
+const inv="INV"+Math.floor(Math.random()*100000)
+
+document.getElementById("invoice").innerText=inv
+
+cart=[]
+
+discount=0
+
+updateCart()
+
+openPage("successPage")
+
+}
+
+loadProducts()
+
+let time=600
+
+setInterval(()=>{
+
+let m=Math.floor(time/60)
+
+let s=time%60
+
+document.getElementById("timer").innerText=m+":"+s
+
+time--
+
+},1000)
 
 </script>
 
