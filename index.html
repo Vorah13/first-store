@@ -6,6 +6,14 @@
 <title>FIRST STORE — Premium Tech Accessories</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  // ── EmailJS Config ── Replace these with your real keys from emailjs.com
+  const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';   // e.g. service_abc123
+  const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';  // e.g. template_xyz456
+  const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';    // e.g. ABCdef123456
+  emailjs.init(EMAILJS_PUBLIC_KEY);
+</script>
 <style>
 :root {
   --brown-dark: #4a2e1a;
@@ -632,7 +640,7 @@ footer a { color: var(--brown-pale); text-decoration: none; }
           <div class="highlight"><div class="highlight-num">4.9★</div><div class="highlight-label">Avg Rating</div></div>
         </div>
         <div class="owner-contact">
-          <div class="contact-chip">📧 arjun@firststore.in</div>
+          <div class="contact-chip">📧 <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7b1a09110e153b1d1209080f080f14091e551215">[email&#160;protected]</a></div>
           <div class="contact-chip">📞 +91 98765 43210</div>
           <div class="contact-chip">📍 Pune, Maharashtra</div>
         </div>
@@ -663,7 +671,7 @@ footer a { color: var(--brown-pale); text-decoration: none; }
           <div class="highlight"><div class="highlight-num">₹5Cr+</div><div class="highlight-label">Revenue</div></div>
         </div>
         <div class="owner-contact">
-          <div class="contact-chip">📧 arjun@firststore.in</div>
+          <div class="contact-chip">📧 <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9cfdeef6e9f2dcfaf5eeefe8efe8f3eef9b2f5f2">[email&#160;protected]</a></div>
           <div class="contact-chip">📞 +91 98765 43210</div>
           <div class="contact-chip">📍 Pune, Maharashtra</div>
           <div class="contact-chip">🌐 www.firststore.in</div>
@@ -817,7 +825,7 @@ footer a { color: var(--brown-pale); text-decoration: none; }
   <div class="cart-badge" id="cartcount">0</div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const products = [
   {
     stock: 5,
@@ -1369,45 +1377,59 @@ function exportCSV() {
 }
 
 function sendOwnerEmail(invoice, name, phone, email, address, items, total) {
-  const ownerEmail = "vorah234@gmail.com";
+  const BOT_TOKEN = '8791392253:AAHIEzE-KctGsXCOnd5NMlvjfjdwONAZ-AE';
+  const CHAT_ID = '5458842015';
   const orderDate = new Date().toLocaleDateString('en-IN', {weekday:'long', day:'2-digit', month:'long', year:'numeric'});
   const orderTime = new Date().toLocaleTimeString('en-IN', {hour:'2-digit', minute:'2-digit'});
-  const orderNum = items.length;
 
-  const itemRows = items.map((item, i) => `
-    <tr>
-      <td style="padding:13px 18px;border-bottom:1px solid #f0e6d3;color:#7c4a2d;font-size:13px;font-weight:600">${String(i+1).padStart(2,'0')}</td>
-      <td style="padding:13px 18px;border-bottom:1px solid #f0e6d3;color:#2c1a0e;font-size:14px;font-weight:500">${item.name}</td>
-      <td style="padding:13px 18px;border-bottom:1px solid #f0e6d3;color:#9a7055;font-size:12px;text-decoration:line-through">&#8377;${item.originalPrice || ''}</td>
-      <td style="padding:13px 18px;border-bottom:1px solid #f0e6d3;color:#a0622a;font-size:14px;font-weight:700;text-align:right">&#8377;${item.price}</td>
-    </tr>`).join('');
+  const itemLines = Array.isArray(items)
+    ? items.map((i, idx) => `  ${String(idx+1).padStart(2,'0')}. ${i.name} — Rs.${i.price}`).join('\n')
+    : items;
 
-  const plainText = [
-    `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
-    `  FIRST STORE — NEW ORDER NOTIFICATION`,
-    `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
-    `Invoice : ${invoice}`,
-    `Date    : ${orderDate}, ${orderTime}`,
-    `Name    : ${name}`,
-    `Phone   : ${phone}`,
-    `Email   : ${email || 'N/A'}`,
-    `Address : ${address}`,
-    ``,
-    ...items.map((item,i) => `  ${String(i+1).padStart(2,'0')}. ${item.name.padEnd(22)} ₹${item.price}`),
-    ``,
-    `  TOTAL : ₹${total}`,
-    `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`
+  const msg = [
+    '🛍 *NEW ORDER — FIRST STORE*',
+    '━━━━━━━━━━━━━━━━━━━━━━',
+    '',
+    `🧾 *Invoice:* \`${invoice}\``,
+    `📅 *Date:* ${orderDate}`,
+    `⏰ *Time:* ${orderTime}`,
+    '',
+    '👤 *CUSTOMER DETAILS*',
+    `• Name: *${name}*`,
+    `• Phone: *${phone}*`,
+    `• Email: ${email || 'Not provided'}`,
+    `• Address: ${address}`,
+    '',
+    '🛒 *ORDER ITEMS*',
+    itemLines,
+    '',
+    `💰 *Total Paid: Rs.${total}*`,
+    '',
+    '━━━━━━━━━━━━━━━━━━━━━━',
+    '✅ Please fulfil within 24 hours',
+    `📞 Call customer: ${phone}`,
   ].join('\n');
 
-  window._emailPlainText = plainText;
-  const subject = encodeURIComponent(`🛍 New Order ${invoice} — ₹${total} — ${name}`);
-  const body = encodeURIComponent(plainText);
-  setTimeout(() => {
-    if (confirm(`Order placed! Open your email client to notify ${ownerEmail}?`)) {
-      window.open(`mailto:${ownerEmail}?subject=${subject}&body=${body}`, '_blank');
+  fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      chat_id: CHAT_ID,
+      text: msg,
+      parse_mode: 'Markdown'
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.ok) {
+      showToast('Order notification sent to Telegram!');
+    } else {
+      console.error('Telegram error:', data);
     }
-  }, 800);
+  })
+  .catch(err => console.error('Telegram fetch error:', err));
 }
+
 
 function generatePDF(invoice, name, phone, email, address, items, total) {
   const { jsPDF } = window.jspdf;
@@ -1640,9 +1662,8 @@ function generatePDF(invoice, name, phone, email, address, items, total) {
   doc.setFontSize(7.5); doc.setFont('helvetica','bold'); doc.setTextColor(74,46,26);
   doc.text('TERMS & CONDITIONS', margin + 4, notesY + 7);
   doc.setFont('helvetica','normal'); doc.setFontSize(7); doc.setTextColor(120,80,50);
-  doc.text('1. Returns accepted within 7 days of delivery in original packaging.', margin + 4, notesY + 14);
-  doc.text('2. This is a computer-generated invoice and does not require a signature.', margin + 4, notesY + 20);
-  doc.text('3. For support, contact arjun@firststore.in or call +91 98765 43210.', margin + 4, notesY + 26);
+  doc.text('1. This is a computer-generated invoice and does not require a signature.', margin + 4, notesY + 14);
+  doc.text('2. For support, contact vorah234@gmail.com or call +91 98765 43210.', margin + 4, notesY + 20);
 
   // ── FOOTER ───────────────────────────────────────────────────
   const footY = H - 18;
@@ -1652,16 +1673,4 @@ function generatePDF(invoice, name, phone, email, address, items, total) {
   doc.rect(0, footY, W, 1.5, 'F');
 
   doc.setFontSize(8); doc.setFont('helvetica','bold'); doc.setTextColor(200,149,106);
-  doc.text('Thank you for shopping with First Store!', W/2, footY + 7, {align:'center'});
-  doc.setFontSize(7); doc.setFont('helvetica','normal'); doc.setTextColor(120,80,50);
-  doc.text('7-Day Easy Returns   |   Secure Payments   |   Free Delivery   |   www.firststore.in', W/2, footY + 13, {align:'center'});
-
-  doc.save('FirstStore_Invoice_' + invoice + '.pdf');
-}
-
-// Init
-loadProducts();
-loadReviews();
-</script>
-</body>
-</html>
+  doc.text('Thank you for shopping with First Store!', W/2, footY + 7, {align:'ce
