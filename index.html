@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>FIRST STORE | Affordable Quality Products</title>
+<title>FIRST STORE</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
@@ -19,7 +19,7 @@ font-family:'Poppins',sans-serif;
 }
 
 body{
-background:white;
+background:#ffffff;
 color:#333;
 }
 
@@ -30,27 +30,26 @@ margin:auto;
 }
 
 header{
-background:white;
-border-bottom:1px solid #eee;
 padding:15px 0;
+border-bottom:1px solid #eee;
 }
 
-header .logo{
-font-weight:700;
+.logo{
 font-size:24px;
+font-weight:700;
 color:#0066ff;
 }
 
 .hero{
 background:linear-gradient(135deg,#0066ff,#4da3ff);
 color:white;
-padding:80px 20px;
 text-align:center;
+padding:80px 20px;
 }
 
 .hero h1{
 font-size:36px;
-margin-bottom:15px;
+margin-bottom:10px;
 }
 
 .hero p{
@@ -59,18 +58,12 @@ margin-bottom:25px;
 }
 
 .btn{
-display:inline-block;
-padding:14px 28px;
 background:white;
 color:#0066ff;
+padding:14px 28px;
 border-radius:30px;
 text-decoration:none;
 font-weight:600;
-transition:.3s;
-}
-
-.btn:hover{
-background:#e9f1ff;
 }
 
 .section{
@@ -79,9 +72,9 @@ padding:60px 20px;
 
 .section-title{
 text-align:center;
+color:#0066ff;
 font-size:28px;
 margin-bottom:40px;
-color:#0066ff;
 }
 
 .grid{
@@ -95,7 +88,6 @@ background:#f8fbff;
 padding:25px;
 border-radius:12px;
 text-align:center;
-box-shadow:0 8px 18px rgba(0,0,0,0.05);
 }
 
 .product{
@@ -113,13 +105,13 @@ object-fit:cover;
 }
 
 .product h3{
-padding:10px;
+margin-top:10px;
 }
 
 .price{
+font-size:20px;
 color:#0066ff;
 font-weight:700;
-font-size:20px;
 }
 
 .product button{
@@ -132,76 +124,67 @@ border-radius:20px;
 cursor:pointer;
 }
 
-.steps{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:20px;
-}
-
-.step{
-border:2px solid #0066ff;
-padding:25px;
-border-radius:10px;
-text-align:center;
-}
-
-.testimonial{
-background:#0066ff;
-color:white;
-text-align:center;
-padding:50px 20px;
-}
-
-.testimonial p{
-max-width:700px;
-margin:auto;
-font-size:18px;
-}
-
-.contact{
-text-align:center;
-}
-
-input,textarea{
-width:100%;
-padding:12px;
-margin:10px 0;
-border:1px solid #ccc;
-border-radius:6px;
-}
-
-form{
-max-width:500px;
-margin:auto;
-}
-
-button.submit{
-background:#0066ff;
-color:white;
-padding:12px 20px;
-border:none;
-border-radius:25px;
-cursor:pointer;
-}
-
-footer{
-text-align:center;
-padding:20px;
-background:#f5f7ff;
-margin-top:40px;
-}
-
 .whatsapp{
 position:fixed;
 bottom:20px;
 right:20px;
 background:#25D366;
 color:white;
-padding:15px 18px;
+padding:15px 20px;
 border-radius:50px;
-font-weight:600;
 text-decoration:none;
-box-shadow:0 6px 15px rgba(0,0,0,0.2);
+font-weight:600;
+}
+
+footer{
+text-align:center;
+padding:20px;
+background:#f5f7ff;
+}
+
+.popup{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.5);
+justify-content:center;
+align-items:center;
+}
+
+.popup-content{
+background:white;
+padding:30px;
+border-radius:10px;
+width:90%;
+max-width:400px;
+}
+
+.popup-content input,
+.popup-content textarea{
+width:100%;
+padding:10px;
+margin:8px 0;
+border:1px solid #ccc;
+border-radius:5px;
+}
+
+.popup-content button{
+background:#0066ff;
+color:white;
+padding:12px;
+border:none;
+border-radius:20px;
+cursor:pointer;
+width:100%;
+}
+
+.close{
+float:right;
+cursor:pointer;
+font-size:18px;
 }
 
 </style>
@@ -217,15 +200,15 @@ box-shadow:0 6px 15px rgba(0,0,0,0.2);
 </header>
 
 <section class="hero">
-<div class="container">
 
 <h1>Best Quality Products at Low Prices</h1>
 
-<p>Perfect for people who want quality products without spending too much money.</p>
+<p>Perfect for people who want quality without spending too much.</p>
 
 <a href="#products" class="btn">Order Now</a>
 
-</div>
+<p style="margin-top:10px;font-weight:600;">🔥 Limited Stock Available</p>
+
 </section>
 
 <section class="section">
@@ -236,20 +219,21 @@ box-shadow:0 6px 15px rgba(0,0,0,0.2);
 
 <div class="card">
 <h3>Affordable</h3>
-<p>Products designed for people who want great value for their money.</p>
+<p>Great value products.</p>
 </div>
 
 <div class="card">
 <h3>Quality Checked</h3>
-<p>We ensure every product meets high quality standards.</p>
+<p>Every product is tested.</p>
 </div>
 
 <div class="card">
-<h3>Fast Ordering</h3>
-<p>Quick and simple ordering with fast delivery.</p>
+<h3>Fast Delivery</h3>
+<p>Quick shipping process.</p>
 </div>
 
 </div>
+
 </section>
 
 <section class="section" id="products">
@@ -259,80 +243,40 @@ box-shadow:0 6px 15px rgba(0,0,0,0.2);
 <div class="container grid">
 
 <div class="product">
+
 <img src="https://picsum.photos/400/300?1">
+
 <h3>Smart Watch</h3>
+
 <p class="price">₹999</p>
-<button onclick="order('Smart Watch')">Order</button>
+
+<button onclick="openOrder('Smart Watch',999)">Order</button>
+
 </div>
 
 <div class="product">
+
 <img src="https://picsum.photos/400/300?2">
+
 <h3>Wireless Earbuds</h3>
+
 <p class="price">₹799</p>
-<button onclick="order('Wireless Earbuds')">Order</button>
+
+<button onclick="openOrder('Wireless Earbuds',799)">Order</button>
+
 </div>
 
 <div class="product">
+
 <img src="https://picsum.photos/400/300?3">
+
 <h3>LED Ring Light</h3>
+
 <p class="price">₹499</p>
-<button onclick="order('LED Ring Light')">Order</button>
-</div>
+
+<button onclick="openOrder('LED Ring Light',499)">Order</button>
 
 </div>
-
-</section>
-
-<section class="section">
-
-<h2 class="section-title">How It Works</h2>
-
-<div class="container steps">
-
-<div class="step">
-<h3>1 Choose Product</h3>
-<p>Select the product you like.</p>
-</div>
-
-<div class="step">
-<h3>2 Order</h3>
-<p>Click order and send request via WhatsApp.</p>
-</div>
-
-<div class="step">
-<h3>3 Delivery</h3>
-<p>Receive product quickly.</p>
-</div>
-
-</div>
-
-</section>
-
-<section class="testimonial">
-
-<p>
-"FIRST STORE gave me amazing products at a price I could easily afford. Highly recommended!"
-</p>
-
-</section>
-
-<section class="section contact">
-
-<h2 class="section-title">Contact Us</h2>
-
-<div class="container">
-
-<form>
-
-<input type="text" placeholder="Your Name">
-
-<input type="email" placeholder="Your Email">
-
-<textarea placeholder="Your Message"></textarea>
-
-<button class="submit">Send Message</button>
-
-</form>
 
 </div>
 
@@ -340,23 +284,59 @@ box-shadow:0 6px 15px rgba(0,0,0,0.2);
 
 <footer>
 
-© 2026 FIRST STORE. All rights reserved.
+© 2026 FIRST STORE
 
 </footer>
 
 <a class="whatsapp" href="https://wa.me/919999999999" target="_blank">
-Order on WhatsApp
+WhatsApp Order
 </a>
+
+<div class="popup" id="orderPopup">
+
+<div class="popup-content">
+
+<span class="close" onclick="closePopup()">✖</span>
+
+<h3>Quick Order</h3>
+
+<form action="https://formsubmit.co/vorah234@gmail.com" method="POST">
+
+<input type="hidden" name="Product" id="productInput">
+
+<input type="hidden" name="Price" id="priceInput">
+
+<input type="text" name="Customer Name" placeholder="Your Name" required>
+
+<input type="text" name="Phone" placeholder="Phone Number" required>
+
+<textarea name="Address" placeholder="Delivery Address" required></textarea>
+
+<input type="number" name="Quantity" value="1">
+
+<button type="submit">Place Order</button>
+
+</form>
+
+</div>
+
+</div>
 
 <script>
 
-function order(product){
+function openOrder(product,price){
 
-let phone="919999999999"
+document.getElementById("orderPopup").style.display="flex"
 
-let message="Hello, I want to order "+product+" from FIRST STORE"
+document.getElementById("productInput").value=product
 
-window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(message))
+document.getElementById("priceInput").value="₹"+price
+
+}
+
+function closePopup(){
+
+document.getElementById("orderPopup").style.display="none"
 
 }
 
