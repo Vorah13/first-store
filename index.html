@@ -513,6 +513,347 @@ footer a { color: var(--brown-pale); text-decoration: none; }
 
 .empty-cart { text-align: center; padding: 60px 20px; }
 .empty-cart p { color: var(--text-light); font-size: 15px; margin-top: 12px; }
+
+/* =============================
+   ANIMATIONS & TRANSITIONS
+   ============================= */
+
+/* Keyframes */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-32px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(32px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.88); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(60px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.06); }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+@keyframes floatY {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+@keyframes spinIn {
+  from { opacity: 0; transform: rotate(-10deg) scale(0.8); }
+  to   { opacity: 1; transform: rotate(0deg) scale(1); }
+}
+@keyframes cartBounce {
+  0%,100% { transform: translateX(-50%) translateY(0); }
+  30%      { transform: translateX(-50%) translateY(-8px); }
+  60%      { transform: translateX(-50%) translateY(-4px); }
+}
+@keyframes badgePop {
+  0%   { transform: scale(0); opacity: 0; }
+  70%  { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes ripple {
+  0%   { transform: scale(0); opacity: 0.6; }
+  100% { transform: scale(4); opacity: 0; }
+}
+@keyframes typewriter {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+@keyframes starTwinkle {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+/* ── HEADER ── */
+header {
+  animation: fadeInDown 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+.logo {
+  animation: fadeInLeft 0.7s 0.2s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+.header-right {
+  animation: fadeInRight 0.7s 0.3s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+.nav-btn {
+  transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+  position: relative;
+  overflow: hidden;
+}
+.nav-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.15);
+  transform: scale(0);
+  border-radius: inherit;
+  transition: transform 0.3s;
+}
+.nav-btn:hover::after { transform: scale(1); }
+
+/* ── HERO ── */
+.hero-badge {
+  animation: spinIn 0.8s 0.3s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+.hero h1 {
+  animation: fadeInUp 0.9s 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+.hero p {
+  animation: fadeInUp 0.9s 0.55s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+.hero-stats {
+  animation: fadeInUp 1s 0.7s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+.stat-num {
+  animation: floatY 3s ease-in-out infinite;
+}
+.stat:nth-child(2) .stat-num { animation-delay: 0.4s; }
+.stat:nth-child(3) .stat-num { animation-delay: 0.8s; }
+.stat:nth-child(4) .stat-num { animation-delay: 1.2s; }
+
+/* ── SECTION TITLE ── */
+.section-title {
+  animation: fadeInUp 0.7s ease both;
+}
+.title-line {
+  animation: scaleIn 0.6s 0.3s ease both;
+  transform-origin: left;
+}
+
+/* ── PRODUCT CARDS ── */
+.product {
+  animation: slideInUp 0.6s ease both;
+  transition: all 0.35s cubic-bezier(0.34,1.56,0.64,1) !important;
+  position: relative;
+  overflow: hidden;
+}
+.product::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(200,149,106,0.08), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+.product:hover::after { opacity: 1; }
+.product:nth-child(1) { animation-delay: 0.05s; }
+.product:nth-child(2) { animation-delay: 0.12s; }
+.product:nth-child(3) { animation-delay: 0.19s; }
+.product:nth-child(4) { animation-delay: 0.26s; }
+.product:nth-child(5) { animation-delay: 0.33s; }
+.product:nth-child(6) { animation-delay: 0.40s; }
+
+.product-badge {
+  animation: badgePop 0.5s 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+.discount-badge {
+  animation: badgePop 0.5s 0.7s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+
+/* Shimmer effect on product image hover */
+.product-img-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.25) 50%, transparent 60%);
+  background-size: 200% 100%;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.product:hover .product-img-wrap::after {
+  opacity: 1;
+  animation: shimmer 0.8s ease forwards;
+}
+
+.add-btn {
+  transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1) !important;
+  position: relative;
+  overflow: hidden;
+}
+.add-btn:active {
+  transform: scale(0.88) !important;
+}
+.add-btn::before {
+  content: '';
+  position: absolute;
+  inset: 50% 50%;
+  background: rgba(255,255,255,0.35);
+  border-radius: 50%;
+  transition: all 0.4s;
+}
+.add-btn:active::before {
+  inset: 0;
+  border-radius: 50%;
+}
+
+/* ── CART BAR ── */
+.cartbar {
+  animation: fadeInUp 1s 1s cubic-bezier(0.34,1.56,0.64,1) both;
+  transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1) !important;
+}
+.cartbar:active { transform: translateX(-50%) scale(0.96) !important; }
+.cart-badge {
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+/* ── MODAL ── */
+.modal-overlay { transition: opacity 0.3s ease; }
+.modal-box { transition: transform 0.38s cubic-bezier(0.34,1.56,0.64,1) !important; }
+.modal-add-btn {
+  transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1) !important;
+  position: relative;
+  overflow: hidden;
+}
+.modal-add-btn:active { transform: scale(0.97) !important; }
+
+/* ── REVIEWS ── */
+.review {
+  animation: fadeInUp 0.6s ease both;
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1) !important;
+}
+.review:nth-child(1) { animation-delay: 0.1s; }
+.review:nth-child(2) { animation-delay: 0.2s; }
+.review:nth-child(3) { animation-delay: 0.3s; }
+.review:nth-child(4) { animation-delay: 0.4s; }
+.review:nth-child(5) { animation-delay: 0.5s; }
+.review:nth-child(6) { animation-delay: 0.6s; }
+.review-stars { animation: starTwinkle 2s ease-in-out infinite; }
+
+/* ── OWNER SECTION ── */
+.owner-avatar {
+  animation: floatY 4s ease-in-out infinite;
+  transition: transform 0.3s ease;
+}
+.owner-avatar:hover { transform: scale(1.05) rotate(3deg); }
+.owner-name {
+  animation: fadeInLeft 0.8s 0.2s ease both;
+}
+.highlight {
+  transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+.highlight:hover {
+  transform: translateY(-4px) scale(1.05);
+  background: rgba(255,255,255,0.15) !important;
+}
+.contact-chip {
+  transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+}
+.contact-chip:hover {
+  transform: translateY(-2px);
+  background: rgba(200,149,106,0.35) !important;
+}
+
+/* ── BUTTONS ── */
+.btn-primary {
+  transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1) !important;
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 0; height: 0;
+  background: rgba(255,255,255,0.2);
+  border-radius: 50%;
+  transform: translate(-50%,-50%);
+  transition: width 0.5s, height 0.5s;
+}
+.btn-primary:active::after { width: 300px; height: 300px; }
+.btn-primary:active { transform: scale(0.97) !important; }
+
+.btn-secondary {
+  transition: all 0.25s ease !important;
+}
+
+/* ── FORM INPUTS ── */
+input, textarea, select {
+  transition: all 0.25s ease !important;
+}
+input:focus, textarea:focus, select:focus {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(200,149,106,0.15) !important;
+}
+
+/* ── CART ITEMS ── */
+.cartitem {
+  animation: fadeInLeft 0.4s ease both;
+  transition: background 0.2s ease;
+}
+.cartitem:hover { background: var(--cream); }
+.remove-btn {
+  transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1) !important;
+}
+.remove-btn:hover { transform: rotate(90deg) scale(1.15) !important; }
+
+/* ── DASHBOARD ── */
+.dash-stat {
+  animation: scaleIn 0.5s ease both;
+  transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+.dash-stat:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover) !important;
+}
+.dash-stat:nth-child(1) { animation-delay: 0.1s; }
+.dash-stat:nth-child(2) { animation-delay: 0.2s; }
+.dash-stat:nth-child(3) { animation-delay: 0.3s; }
+.dash-stat:nth-child(4) { animation-delay: 0.4s; }
+
+/* ── SUCCESS PAGE ── */
+.success-icon {
+  animation: spinIn 0.7s cubic-bezier(0.34,1.56,0.64,1) both, pulse 2s 1s ease-in-out infinite;
+}
+.invoice-card {
+  animation: fadeInUp 0.7s 0.4s ease both;
+}
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.34,1.56,0.64,1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── LOGO ANIMATION ── */
+.logo-icon {
+  animation: floatY 3s ease-in-out infinite;
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+.logo:hover .logo-icon { transform: rotate(15deg) scale(1.1); }
+
+/* ── ANIMATED HERO BACKGROUND ── */
+.hero {
+  background-size: 300% 300% !important;
+  animation: gradientShift 8s ease infinite !important;
+}
 </style>
 </head>
 <body>
@@ -861,7 +1202,7 @@ const products = [
     price: 399,
     originalPrice: 499,
     discount: 20,
-    img: "https://picsum.photos/seed/ringlight/400/300",
+    img: "https://i.ibb.co/1G2Lc1rn/nadine-e-ZPP-z-P8-HYG0-unsplash.jpg",
     desc: "Perfect for content creators",
     fullDesc: "Level up your content creation with our professional Ring Light. Featuring 3 colour temperature modes (warm, natural, cool) and 10 brightness levels, you can achieve the perfect lighting for every shoot. The flexible gooseneck arm adjusts to any angle. Ideal for YouTube, Instagram, video calls, and makeup.",
     features: ["💡 3 Colour Temperatures", "🔆 10 Brightness Levels", "📐 360° Adjustable Arm", "🔌 USB Powered", "📷 Phone Holder Included"],
@@ -875,7 +1216,7 @@ const products = [
     price: 549,
     originalPrice: 699,
     discount: 21,
-    img: "https://picsum.photos/seed/speaker/400/300",
+    img: "https://i.ibb.co/chgyh0gd/habib-dadkhah-zxvnrxl5-OXc-unsplash.jpg",
     desc: "360° surround sound",
     fullDesc: "Fill any room with rich, powerful sound from our portable Bluetooth Speaker. The 360° omnidirectional audio creates an immersive listening experience. Featuring a dual driver setup and passive bass radiator, the deep bass response will impress even audiophiles. Connect instantly via Bluetooth 5.0 and enjoy up to 12 hours of continuous music.",
     features: ["🔊 360° Surround Sound", "⏱ 12hr Playtime", "📶 Bluetooth 5.0", "💧 IPX6 Waterproof", "🎤 Built-in Microphone"],
@@ -889,7 +1230,7 @@ const products = [
     price: 449,
     originalPrice: 599,
     discount: 25,
-    img: "https://picsum.photos/seed/powerbank/400/300",
+    img: "https://i.ibb.co/20TRDd4r/sai-balaji-varma-gadhiraju-Qs-Vafc-I4ouo-unsplash.jpg",
     desc: "20,000mAh fast charging",
     fullDesc: "Never run out of battery with our 20,000mAh Power Bank. Featuring 22.5W fast charging, it can charge your phone from 0 to 50% in just 30 minutes. With 3 output ports, charge multiple devices simultaneously. The slim, pocket-friendly design and LED battery indicator make it ideal for travel, commutes, and outdoor adventures.",
     features: ["⚡ 22.5W Fast Charging", "🔋 20,000mAh Capacity", "🔌 3 Output Ports", "📊 LED Battery Indicator", "✈️ Travel-Friendly Design"],
@@ -903,7 +1244,7 @@ const products = [
     price: 100,
     originalPrice: 150,
     discount: 33,
-    img: "https://picsum.photos/seed/pencil99/400/300",
+    img: "https://i.ibb.co/kg5SGd49/amjd-rdwan-Ue-Wy3rv7nu-U-unsplash.jpg",
     desc: "Smooth writing, premium quality",
     fullDesc: "Experience the joy of writing with our Premium Pencil. Crafted with a high-quality graphite core, it delivers smooth, consistent lines every time. The hexagonal barrel ensures a comfortable, non-slip grip for long writing or drawing sessions. Perfect for students, artists, and everyday use.",
     features: ["\u270f\ufe0f Smooth HB Graphite Core", "\ud83d\udd37 Ergonomic Hexagonal Barrel", "\ud83c\udfa8 Perfect for Writing & Sketching", "\ud83e\uddf9 Easy to Erase", "\ud83d\udce6 Pack of 10 Pencils"],
@@ -1642,6 +1983,47 @@ function generatePDF(invoice, name, phone, email, address, items, total) {
 // Init
 loadProducts();
 loadReviews();
+
+// ── SCROLL REVEAL OBSERVER ──
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+function initReveal() {
+  document.querySelectorAll(
+    '.product, .review, .dash-stat, .order-card, .highlight, .stat, .section-title, .owner-avatar, .owner-name, .owner-bio, .owner-highlights, .owner-contact, .invoice-card'
+  ).forEach(el => {
+    el.classList.add('reveal');
+    revealObserver.observe(el);
+  });
+}
+
+// Re-run reveal when pages change
+const _origOpenPage = openPage;
+window.openPage = function(p, btn) {
+  _origOpenPage(p, btn);
+  setTimeout(initReveal, 100);
+};
+
+// Cart badge bounce on add
+const _origAdd = add;
+window.add = function(i) {
+  _origAdd(i);
+  const badge = document.getElementById('cartcount');
+  badge.style.animation = 'none';
+  requestAnimationFrame(() => {
+    badge.style.animation = '';
+    badge.style.transform = 'scale(1.5)';
+    setTimeout(() => badge.style.transform = '', 300);
+  });
+};
+
+setTimeout(initReveal, 200);
 </script>
 </body>
 </html>
